@@ -10,7 +10,7 @@ HEIGHT = 1080
 FONT = '/usr/share/fonts/TTF/DroidSans.ttf'
 FONT_SIZE = 14
 LINE_HEIGHT = 20
-REFRESH = 5
+REFRESH = 0
 DEFAULT_IMAGE = 'out.png'
 
 parser = OptionParser(usage="%prog -f PATH [options]")
@@ -29,7 +29,7 @@ parser.add_option("--font-size", default=FONT_SIZE, dest="font_size", type="int"
 parser.add_option("--line-height", default=LINE_HEIGHT, dest="line_height", type="int",
                   help="line height of text", metavar="INT")
 parser.add_option("-r", "--refresh", default=REFRESH, dest="refresh", type="int",
-                  help="time in seconds between reading the file", metavar="INT")
+                  help="time in seconds between reading the file, DEFAULT: 0 - no refresh", metavar="INT")
 
 options, args = parser.parse_args()
 if not options.file_path:
@@ -61,6 +61,8 @@ try:
                          , fill = FOREGROUND
                          )
             bg.save(options.image_path)
+            if options.refresh == 0:
+                break
 
 except IOError:
     print options.file_path + ' not found.'
