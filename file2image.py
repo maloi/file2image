@@ -30,6 +30,8 @@ parser.add_option("--line-height", default=LINE_HEIGHT, dest="line_height", type
                   help="line height of text", metavar="INT")
 parser.add_option("-r", "--refresh", default=REFRESH, dest="refresh", type="int",
                   help="time in seconds between reading the file, DEFAULT: 0 - no refresh", metavar="INT")
+parser.add_option("--reverse", dest="reverse", action="store_true",
+                  help="reverse output")
 
 options, args = parser.parse_args()
 if not options.file_path:
@@ -55,11 +57,11 @@ try:
                 h += options.line_height
                 if h > options.height:
                     break
-                draw.text( (0, options.height - h)
-                         , l
-                         , font = font
-                         , fill = FOREGROUND
-                         )
+                if options.reverse:
+                    y = 0 + h - options.line_height
+                else:
+                    y = options.height - h
+                draw.text((0, y), l, font = font, fill = FOREGROUND)
             bg.save(options.image_path)
             if options.refresh == 0:
                 break
