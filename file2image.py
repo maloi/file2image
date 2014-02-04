@@ -65,6 +65,8 @@ try:
             bg.save(options.image_path)
             if options.refresh == 0:
                 break
+            del bg
+            del draw
 
 except IOError:
     print options.file_path + ' not found.'
